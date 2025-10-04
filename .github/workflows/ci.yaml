@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu, macos, windows]
+        os: [macos, windows]
         # target: [ x86_64, aarch64 ]
         target: [aarch64]
         include:
@@ -38,12 +38,6 @@ jobs:
             ~/.cargo/git
             target
           key: v0-rust-build-${{ matrix.os }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
-
-      - name: Install dependencies
-        if: matrix.os == 'ubuntu'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwayland-dev pkg-config
 
       - name: 构建产物
         run: cargo build --release
