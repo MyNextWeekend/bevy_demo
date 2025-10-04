@@ -103,5 +103,5 @@ jobs:
           name: Release ${{ github.ref_name }}
           # 上传dist目录下的所有文件
           files: dist/*
-          draft: true # 设为草稿（不直接发布）
+          draft: false # 直接发布
           prerelease: false # 不设为预发布（正式版本）
