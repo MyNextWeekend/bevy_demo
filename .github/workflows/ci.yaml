@@ -33,6 +33,10 @@ jobs:
         name: rust缓存
         uses: Swatinem/rust-cache@v2
         with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
           key: v0-rust-build-${{ matrix.os }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install dependencies
