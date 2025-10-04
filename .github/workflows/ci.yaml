@@ -33,6 +33,12 @@ jobs:
         name: rust缓存
         uses: Swatinem/rust-cache@v2
 
+      - name: Install dependencies
+        if: matrix.os == 'ubuntu'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwayland-dev pkg-config
+
       - name: 构建产物
         run: cargo build --release
 
