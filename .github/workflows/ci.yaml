@@ -4,7 +4,7 @@ on:
     # branches:
     #   - main
     tags:
-      - "v*"  # 匹配所有以 v 开头的 Tag（如 v0.1.0、v1.2.3-beta）
+      - "v*" # 匹配所有以 v 开头的 Tag（如 v0.1.0、v1.2.3-beta）
   pull_request:
     branches:
       - main
@@ -16,9 +16,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ ubuntu, macos, windows ]
+        os: [ubuntu, macos, windows]
         # target: [ x86_64, aarch64 ]
-        target: [ aarch64 ]
+        target: [aarch64]
         include:
           - os: windows
             ls: dir
@@ -32,6 +32,8 @@ jobs:
       - id: cache-rust
         name: rust缓存
         uses: Swatinem/rust-cache@v2
+        with:
+          key: v0-rust-build-${{ matrix.os }}-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Install dependencies
         if: matrix.os == 'ubuntu'
@@ -73,7 +75,7 @@ jobs:
         with:
           name: dist
           pattern: dist-*
-       
+
   # 发布任务
   release:
     runs-on: ubuntu-latest
@@ -88,7 +90,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist
-          path: dist  # 下载到dist目录
+          path: dist # 下载到dist目录
 
       - name: 验证文件存在性
         run: |
@@ -102,5 +104,5 @@ jobs:
           name: Release ${{ github.ref_name }}
           # 上传dist目录下的所有文件
           files: dist/*
-          draft: true  # 设为草稿（不直接发布）
-          prerelease: false  # 不设为预发布（正式版本）
+          draft: true # 设为草稿（不直接发布）
+          prerelease: false # 不设为预发布（正式版本）
