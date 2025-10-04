@@ -41,14 +41,14 @@ jobs:
         shell: powershell
         run: |
           mkdir dist
-          Copy-Item target\release\axum_demo.exe dist\axum_demo-${{ matrix.os }}-${{ matrix.target }}.exe
+          Copy-Item target\release\bevy_demo.exe dist\bevy_demo-${{ matrix.os }}-${{ matrix.target }}.exe
           dir dist\
 
       - name: 找到 MAC 构建的产物
         if: matrix.os != 'windows'
         run: |
           mkdir dist
-          cp target/release/axum_demo dist/axum_demo-${{ matrix.os  }}-${{ matrix.target }}
+          cp target/release/bevy_demo dist/bevy_demo-${{ matrix.os  }}-${{ matrix.target }}
           find dist/
 
       - name: 上传构建产物
